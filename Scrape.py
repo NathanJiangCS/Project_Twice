@@ -5,7 +5,7 @@ import urllib.request
 from bs4 import BeautifulSoup
 db = open('links.txt','w')
 images = []
-urls = ["https://twitter.com/blackpaint96", "https://twitter.com/peachromance", "https://twitter.com/winterspring97", "https://twitter.com/kimdahyun_kr"]
+urls = ["https://twitter.com/blackpaint96", "https://twitter.com/peachromance", "https://all-twice.com", "https://twitter.com/kimdahyun_kr"]
 for theurl in urls:
     thepage = urllib.request.urlopen(theurl)
     soup = BeautifulSoup(thepage, "html.parser")
