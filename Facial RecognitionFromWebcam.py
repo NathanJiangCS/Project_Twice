@@ -1,4 +1,5 @@
-# -*- coding: cp1252 -*-
+#This code is very similar to the other facial recognition script. To understand what this does
+#you can refer to the comments on that script.
 from facerec.feature import Fisherfaces
 from facerec.classifier import NearestNeighbor
 from facerec.model import PredictableModel
@@ -63,12 +64,12 @@ pathdir='C:\Users\Nathan Jiang\Desktop\sort\dataset'
 
 
 #Initialization:
-quanti = int(raw_input('Quanti siete davanti alla webcam? \n numero:'))
+quanti = int(raw_input('How many web cams are there?\n Number: '))
 for i in range(quanti):
-    nome = raw_input('Ciao utente '+str(i+1)+' qual è il tuo nome?\n nome:')
+    nome = raw_input('Hello user '+str(i+1)+', what is your name?\n name:')
     if not os.path.exists(os.path.join(pathdir,nome)): os.makedirs(pathdir+nome)
-    print ( 'sei pronto per farmi scattare qualche foto? \n')
-    print ( ' ci vorranno solo 10 secondi\n premi "S" quando sei al centro ')
+    print ( 'Are you ready for some pictures? \n')
+    print ( ' It will take 10 seconds\n Press "s" when you are centered ')
     while (1):
         ret,frame = vc.read()
 
@@ -83,7 +84,6 @@ for i in range(quanti):
             break
     cv2.destroyAllWindows()
 
-    #comincio a scattare
     start = time.time()
     count = 0
     while int(time.time()-start) <= 14:
@@ -111,7 +111,7 @@ list_of_labels = list(xrange(max(y)+1))
 subject_dictionary = dict(zip(list_of_labels, subject_names))
 model.compute(X,y)
 
-#comincia il riconoscimento.
+#Start recognition
 while (1):
     rval, frame = vc.read()
 
@@ -128,12 +128,10 @@ while (1):
         sampleImage = gray[y:y+h, x:x+w]
         sampleImage = cv2.resize(sampleImage, (256,256))
 
-        #capiamo di chi è sta faccia
         [ predicted_label, generic_classifier_output] = model.predict(sampleImage)
         print [ predicted_label, generic_classifier_output]
-        #scelta la soglia a 700. soglia maggiore di 700, accuratezza minore e v.v.
         if int(generic_classifier_output['distances']) <=  700:
-            cv2.putText(img,'tu sei : '+str(subject_dictionary[predicted_label]), (x,y), cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,250),3,1)
+            cv2.putText(img,'You are : '+str(subject_dictionary[predicted_label]), (x,y), cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,250),3,1)
     cv2.imshow('result',img)
     if cv2.waitKey(10) == 27:
         break
